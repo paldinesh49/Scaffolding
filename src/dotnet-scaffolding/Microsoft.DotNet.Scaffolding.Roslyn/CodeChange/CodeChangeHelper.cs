@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 using System.Text.Json.Serialization;
 
-namespace Microsoft.DotNet.Scaffolding.Helpers.Roslyn;
+namespace Microsoft.DotNet.Scaffolding.Roslyn.CodeChange;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 internal enum CodeChangeType

@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Microsoft.DotNet.Scaffolding.Helpers.Roslyn;
+namespace Microsoft.DotNet.Scaffolding.Roslyn;
 
 internal static class RoslynUtilities
 {
@@ -30,6 +30,7 @@ internal static class RoslynUtilities
         {
             throw new ArgumentNullException(nameof(identifier));
         }
+
         return IsKeyWord(identifier) ? $"@{identifier}" : identifier;
     }
 

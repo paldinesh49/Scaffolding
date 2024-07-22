@@ -7,11 +7,9 @@ using System.Xml.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
-using Microsoft.DotNet.Scaffolding.Helpers.Extensions;
-using Microsoft.DotNet.Scaffolding.Helpers.General;
-using Microsoft.DotNet.Scaffolding.Helpers.Services;
+using Microsoft.DotNet.Scaffolding.Roslyn.CodeChange;
 
-namespace Microsoft.DotNet.Scaffolding.Helpers.Roslyn;
+namespace Microsoft.DotNet.Scaffolding.Roslyn;
 
 internal static class ProjectModifierHelper
 {
@@ -33,24 +31,22 @@ internal static class ProjectModifierHelper
     /// Check if Startup.cs or similar file exists.
     /// </summary>
     /// <returns>true if Startup.cs does not exist, false if it does exist.</returns>
-    public static async Task<bool> IsMinimalApp(ICodeService codeService)
+    public static async Task<bool> IsMinimalApp(List<ISymbol> allClassSymbols, List<Document> allDocuments)
     {
         //find Startup if named Startup.
-        var allClassSymbols = await codeService.GetAllClassSymbolsAsync();
         var startupType = allClassSymbols.FirstOrDefault(x => x.Name.Equals("Startup", StringComparison.OrdinalIgnoreCase));
         if (startupType == null)
         {
             //if changed the name in Program.cs, get the class name and check.
-            var programDocument = (await codeService.GetAllDocumentsAsync()).FirstOrDefault(d => d.Name.EndsWith("Program.cs"));
+            var programDocument = allDocuments.FirstOrDefault(d => d.Name.EndsWith("Program.cs"));
             var startupClassName = await GetStartupClassName(programDocument);
             startupType = allClassSymbols.FirstOrDefault(x => x.Name.Equals(startupClassName, StringComparison.OrdinalIgnoreCase));
         }
         return startupType == null;
     }
 
-    public static async Task<bool> IsUsingTopLevelStatements(ICodeService codeService)
+    public static async Task<bool> IsUsingTopLevelStatements(List<Document> allDocuments)
     {
-        var allDocuments = await codeService.GetAllDocumentsAsync();
         var programDocument = allDocuments?.FirstOrDefault(d => d.Name.EndsWith("Program.cs"));
         if (programDocument != null && await programDocument.GetSyntaxRootAsync() is CompilationUnitSyntax root)
         {
@@ -604,7 +600,7 @@ internal static class ProjectModifierHelper
             {
                 foreach (var key in csprojVariables.Keys)
                 {
-                    if (tfm.ContainsIgnoreCase(key) && csprojVariables.TryGetValue(key, out string? val))
+                    if (tfm.Contains(key, StringComparison.OrdinalIgnoreCase) && csprojVariables.TryGetValue(key, out string? val))
                     {
                         tfm = tfm.Replace(key, val);
                     }

@@ -1,6 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-namespace Microsoft.DotNet.Scaffolding.Helpers.Roslyn;
+// The .NET Foundation licenses this file to you under the MIT license
+namespace Microsoft.DotNet.Scaffolding.Roslyn.CodeChange;
 
 internal class CodeSnippet
 {
@@ -29,7 +29,7 @@ internal class CodeSnippet
     public Formatting LeadingTrivia { get; set; } = new Formatting();
     public Formatting TrailingTrivia { get; set; } = new Formatting { Semicolon = true, Newline = true };
     public string? Parameter { get; set; }
-    public CodeChangeType? CodeChangeType { get; set; } = Roslyn.CodeChangeType.Default;
+    public CodeChangeType? CodeChangeType { get; set; } = CodeChange.CodeChangeType.Default;
     public string[]? MultiLineBlock { get; set; }
     public string[]? ReplaceSnippet { get; set; }
 }

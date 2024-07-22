@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Formatting;
 
-namespace Microsoft.DotNet.Scaffolding.Helpers.Roslyn;
+namespace Microsoft.DotNet.Scaffolding.Roslyn;
 
 internal static class ClassModifier
 {

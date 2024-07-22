@@ -2,15 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 using System.Text;
 using Microsoft.CodeAnalysis;
-using Microsoft.DotNet.Scaffolding.Helpers.Extensions.Roslyn;
-using Microsoft.DotNet.Scaffolding.Helpers.Services;
+using Microsoft.DotNet.Scaffolding.Roslyn.CodeChange;
 
-namespace Microsoft.DotNet.Scaffolding.Helpers.Roslyn;
+namespace Microsoft.DotNet.Scaffolding.Roslyn;
 
 internal class ProjectModifier
 {
-    private readonly ILogger _consoleLogger;
-    private readonly ICodeService _codeService;
     private const string Main = nameof(Main);
     private readonly StringBuilder _output;
     private readonly string _projectPath;
@@ -18,12 +15,9 @@ internal class ProjectModifier
 
     public ProjectModifier(
         string projectPath,
-        ICodeService codeService,
-        ILogger consoleLogger,
+        Solution solution,
         CodeModifierConfig? codeModifierConfig = null)
     {
-        _codeService = codeService;
-        _consoleLogger = consoleLogger ?? throw new ArgumentNullException(nameof(consoleLogger));
         _output = new StringBuilder();
         _projectPath = projectPath;
         _codeModifierConfig = codeModifierConfig;
@@ -35,6 +29,8 @@ internal class ProjectModifier
         {
             return false;
         }
+
+        //figure out CodeService here
 
         var codeChangeOptions = new CodeChangeOptions()
         {
@@ -136,7 +132,7 @@ internal class ProjectModifier
             return fileDoc;
         }
 
-        DocumentBuilder documentBuilder = new(fileDoc, file, _consoleLogger);
+        DocumentBuilder documentBuilder = new(fileDoc, file);
         return await documentBuilder.RunAsync();
     }
 

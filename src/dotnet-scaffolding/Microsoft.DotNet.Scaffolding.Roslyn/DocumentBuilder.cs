@@ -6,25 +6,21 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.DotNet.Scaffolding.Helpers.General;
-using Microsoft.DotNet.Scaffolding.Helpers.Services;
+using Microsoft.DotNet.Scaffolding.Roslyn.CodeChange;
 
-namespace Microsoft.DotNet.Scaffolding.Helpers.Roslyn;
+namespace Microsoft.DotNet.Scaffolding.Roslyn;
 
 internal class DocumentBuilder
 {
     private readonly CodeFile _codeFile;
-    private readonly ILogger _consoleLogger;
     private readonly Document _document;
 
     public DocumentBuilder(
         Document document,
-        CodeFile codeFile,
-        ILogger consoleLogger)
+        CodeFile codeFile)
     {
         _document = document ?? throw new ArgumentNullException(nameof(document));
         _codeFile = codeFile ?? throw new ArgumentNullException(nameof(codeFile));
-        _consoleLogger = consoleLogger ?? throw new ArgumentNullException(nameof(consoleLogger));
     }
 
     public async Task<Document> RunAsync()

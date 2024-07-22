@@ -8,17 +8,14 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Build.Locator" />
     <PackageReference Include="Microsoft.Build" ExcludeAssets="runtime" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Common" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Features" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="$(RepoRoot)src\dotnet-scaffolding\Microsoft.DotNet.Scaffolding.ComponentModel\Microsoft.DotNet.Scaffolding.ComponentModel.csproj" />
     <ProjectReference Include="$(RepoRoot)src\dotnet-scaffolding\Microsoft.DotNet.Scaffolding.TextTemplating\Microsoft.DotNet.Scaffolding.TextTemplating.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions\Roslyn\" />
   </ItemGroup>
 </Project>

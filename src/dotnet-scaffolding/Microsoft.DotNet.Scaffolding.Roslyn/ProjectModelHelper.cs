@@ -2,11 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 using System.Reflection;
 
-namespace Microsoft.DotNet.Scaffolding.Helpers.General;
+namespace Microsoft.DotNet.Scaffolding.Roslyn;
 
 internal static class ProjectModelHelper
 {
-    internal static Dictionary<string, string> ShortTfmDictionary = new Dictionary<string, string>()
+    internal static Dictionary<string, string> ShortTfmDictionary = new()
     {
         { ".NETCoreApp,Version=v3.1", "netcoreapp3.1" },
         { ".NETCoreApp,Version=v5.0", "net5.0" },
@@ -35,10 +35,8 @@ internal static class ProjectModelHelper
                 return string.Empty;
             }
 
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                jsonText = reader.ReadToEnd();
-            }
+            using StreamReader reader = new StreamReader(stream);
+            jsonText = reader.ReadToEnd();
         }
 
         return jsonText;
